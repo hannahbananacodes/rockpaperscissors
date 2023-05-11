@@ -19,12 +19,33 @@
         var randomChoice = Math.floor(Math.random()*choiceArray.length);
         return choiceArray[randomChoice]
    }
+   let computerSelection = getComputerChoice()
+
+
+   function computerWin() {
+        const h2 = document.createElement('h2')
+        h2.innerText = "YOU LOSE"
+        outcomeDiv.appendChild(h2)
+   }
+
+   function playerWin() {
+        const h2 = document.createElement('h2')
+        h2.innerText = "YOU WIN"
+        outcomeDiv.appendChild(h2)
+   }
+
+   function gameEnd() {
+        document.querySelector('#rock').disabled = true;
+        document.querySelector('#paper').disabled = true;
+        document.querySelector('#scissors').disabled = true;
+   }
+
 // test if it works by spitting out to console
- // console.log(getComputerChoice())
+ // console.log(computerSelection)
 
+const outcomeDiv = document.querySelector('.outcome');
 
-
-function playRound (playerSelection, computerSelection) {
+function playRound(playerSelection, computerSelection) {
     if (playerSelection == computerSelection) {
         const p = document.createElement('p')
         p.innerText = "It's a tie!"
@@ -35,49 +56,64 @@ function playRound (playerSelection, computerSelection) {
         const p = document.createElement('p')
         p.innerText = "You win! Rock beats scissors!"
         outcomeDiv.appendChild(p)
+        if (playerScore == 5) {
+            playerWin()
+            gameEnd()
+        }
     }
     else if ((playerSelection == "Scissors") && (computerSelection == "Rock")) {
         compScore++
         const p = document.createElement('p')
         p.innerText = "You lose! Rock beats scissors!"
         outcomeDiv.appendChild(p)
+        if (compScore == 5) {
+            computerWin()
+            gameEnd()
+        }
     }
     else if ((playerSelection == "Rock") && (computerSelection == "Paper")) {
         compScore++
         const p = document.createElement('p')
         p.innerText = "You lose! Paper beats rock!"
         outcomeDiv.appendChild(p)
+        if (compScore == 5) {
+            computerWin()
+            gameEnd()
+        }
+        
     }
     else if ((playerSelection == "Scissors") && (computerSelection == "Paper")) {
         playerScore++
         const p = document.createElement('p')
         p.innerText = "You win! Scissors beats paper!"
         outcomeDiv.appendChild(p)
+        if (playerScore == 5) {
+            playerWin()
+            gameEnd()
+        }
     }
     else if ((playerSelection == "Paper") && (computerSelection == "Rock")) {
         playerScore++
         const p = document.createElement('p')
         p.innerText = "You win! Paper beats rock!"
         outcomeDiv.appendChild(p)
+        if (playerScore == 5) {
+            playerWin()
+            gameEnd()
+        }
     }
     else if ((playerSelection == "Paper") && (computerSelection == "Scissors")) {
         compScore++
         const p = document.createElement('p')
         p.innerText = "You lose! Scissors beats paper!"
         outcomeDiv.appendChild(p)
+        if (compScore == 5) {
+            computerWin()
+            gameEnd()
+        }
     }
 }
 
-function checkForWinner(playerScore, compScore) {
-    if (playerScore == 5) {
-        const h2 = document.createElement('h2')
-        h2.innerText = "YOU WIN"
-    }
-    else if (compScore == 5) {
-        const h2 = document.createElement('h2')
-        h2.innerText = "YOU LOSE"
-    }
-}
 
 const rock = document.querySelector('#rock');
 rock.addEventListener('click', () => {
@@ -104,7 +140,32 @@ scissors.addEventListener('click', () => {
     playRound(playerSelection, computerSelection);
 });
 
-const outcomeDiv = document.querySelector('.outcome');
+if (compScore == 5 || playerScore == 5) {
+    document.querySelector('#rock').disabled = true;
+    document.querySelector('#paper').disabled = true;
+    document.querySelector('#scissors').disabled = true;
+}
+else {
+    document.querySelector('#rock').disabled = false;
+    document.querySelector('#paper').disabled = false;
+    document.querySelector('#scissors').disabled = false;
+}
+
+//the problem is that the below if/else statement is running at the beginning... I need it to check after each button click
+//if (compScore === 5 && playerScore !=5) {
+   // console.log("You lose")
+    //const h2 = document.createElement('h2')
+    //h2.innerText = "YOU LOSE"
+//}
+//else if (playerScore === 5) {
+   // console.log("you win")
+   // const h2 = document.createElement('h2')
+   // h2.innerText = "YOU WIN"
+//}
+//else {
+   // console.log("what the fuck")
+//}
+
 
 //function game() {
     //for (let i = 0; i < 5; i++) {
